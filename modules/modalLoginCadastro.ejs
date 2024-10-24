@@ -1,0 +1,199 @@
+<div
+  class="modal fade"
+  id="loginModal"
+  tabindex="-1"
+  aria-labelledby="loginModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Acessar Conta</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Nav Tabs -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="login-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#login"
+              type="button"
+              role="tab"
+              aria-controls="login"
+              aria-selected="true"
+            >
+              Login
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="register-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#register"
+              type="button"
+              role="tab"
+              aria-controls="register"
+              aria-selected="false"
+            >
+              Cadastro
+            </button>
+          </li>
+          <li class="nav-item" role="presentation" style="display: none;">
+            <button
+              class="nav-link"
+              id="forgot-password-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#forgot-password"
+              type="button"
+              role="tab"
+              aria-controls="forgot-password"
+              aria-selected="false"
+            >
+              Esqueci a Senha
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="myTabContent">
+          <!-- Login Tab -->
+          <div
+            class="tab-pane fade show active"
+            id="login"
+            role="tabpanel"
+            aria-labelledby="login-tab"
+          >
+            <form class="mt-3" action="/login" method="POST">
+              <div class="mb-3">
+                <label for="loginEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="loginEmail"
+                  name="email"
+                  placeholder="email@example.com"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="loginPassword" class="form-label">Senha</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="loginPassword"
+                  name="senha"
+                  placeholder="Sua senha"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Entrar</button>
+              <div class="mt-2">
+                <a href="#" id="forgotPasswordLink">Esqueci minha senha</a>
+              </div>
+            </form>
+          </div>
+
+          <!-- Register Tab -->
+          <div
+            class="tab-pane fade"
+            id="register"
+            role="tabpanel"
+            aria-labelledby="register-tab"
+          >
+            <form class="mt-3" action="/cadastro" method="POST">
+              <div class="mb-3">
+                <label for="registerNome" class="form-label">Nome</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="registerNome"
+                  name="nome"
+                  placeholder="Seu nome"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="registerEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="registerEmail"
+                  name="email"
+                  placeholder="email@example.com"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="registerPassword" class="form-label">Senha</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="registerPassword"
+                  name="senha"
+                  placeholder="Crie uma senha"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="registerConfirmPassword" class="form-label">Confirme a Senha</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="registerConfirmPassword"
+                  name="confirmarSenha"
+                  placeholder="Confirme sua senha"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-success">
+                Cadastrar
+              </button>
+            </form>
+          </div>
+
+          <!-- Forgot Password Tab -->
+          <div
+            class="tab-pane fade"
+            id="forgot-password"
+            role="tabpanel"
+            aria-labelledby="forgot-password-tab"
+          >
+            <form class="mt-3" action="/recuperar-senha" method="POST">
+              <div class="mb-3">
+                <label for="forgotEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="forgotEmail"
+                  name="email"
+                  placeholder="email@example.com"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-warning">Recuperar Senha</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script para alternar para a aba "Esqueci a Senha" -->
+<script>
+    document.getElementById("forgotPasswordLink").addEventListener("click", function (e) {
+      e.preventDefault();
+      var forgotPasswordTab = new bootstrap.Tab(document.getElementById("forgot-password-tab"));
+      forgotPasswordTab.show();
+    });
+  </script>
+  

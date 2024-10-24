@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle %></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <%- include('../modules/menu') %>
+    <br /><br /><br /><br />
+
+    <div class="container mt-5">
+      <h1 class="mb-4"><%= pageTitle %></h1>
+      <div class="row">
+        <% comidas.forEach(comida => { %>
+        <div class="col mb-3">
+          <div
+            class="card"
+            data-bs-toggle="modal"
+            data-bs-target="#modal<%= comida.id %>"
+          >
+            <img
+              src="<%= comida.imagem_url %>"
+              class="card-img-top imagemCardPricipal"
+              alt="<%= comida.titulo %>"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= comida.titulo %></h5>
+              <p class="card-text"><%= comida.descricao %></p>
+              <p class="card-text">
+                <small class="text-muted"
+                  >Tempo de preparo: <%= comida.tempo_preparo %> minutos</small
+                >
+              </p>
+              <p class="card-text">
+                <small class="text-muted"
+                  >Rendimento: <%= comida.rendimento %></small
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="modal<%= comida.id %>"
+          tabindex="-1"
+          aria-labelledby="modalLabel<%= comida.id %>"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel<%= comida.id %>">
+                  <%= comida.titulo %> - Receita
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <!-- Imagem da Receita -->
+                <div class="col mx-auto text-center">
+                  <img
+                    src="<%= comida.imagem_url %>"
+                    class="img-fluid mb-3 imagemModal"
+                    alt="<%= comida.titulo %>"
+                  />
+                </div>
+
+                <!-- Nav Tabs -->
+                <ul
+                  class="nav nav-tabs"
+                  id="recipeTabs<%= comida.id %>"
+                  role="tablist"
+                >
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="ingredients-tab<%= comida.id %>"
+                      data-bs-toggle="tab"
+                      data-bs-target="#ingredients<%= comida.id %>"
+                      type="button"
+                      role="tab"
+                      aria-controls="ingredients"
+                      aria-selected="true"
+                    >
+                      Ingredientes
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="preparation-tab<%= comida.id %>"
+                      data-bs-toggle="tab"
+                      data-bs-target="#preparation<%= comida.id %>"
+                      type="button"
+                      role="tab"
+                      aria-controls="preparation"
+                      aria-selected="false"
+                    >
+                      Modo de Preparo
+                    </button>
+                  </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="recipeTabsContent<%= comida.id %>">
+                  <!-- Ingredientes Tab -->
+                  <div
+                    class="tab-pane fade show active"
+                    id="ingredients<%= comida.id %>"
+                    role="tabpanel"
+                    aria-labelledby="ingredients-tab<%= comida.id %>"
+                  >
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Descrição</th>
+                          <th>Quantidade</th>
+                          <th>Unidade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if (comida.listaIngredientes &&
+                        Array.isArray(comida.listaIngredientes) &&
+                        comida.listaIngredientes.length > 0) { %> <%
+                        comida.listaIngredientes.forEach(item => { %> <% const
+                        [descricao, quantidade, unidade] = item.split('|'); %>
+                        <tr>
+                          <td><%= descricao %></td>
+                          <td><%= quantidade %></td>
+                          <td><%= unidade %></td>
+                        </tr>
+                        <% }); %> <% } else { %>
+                        <tr>
+                          <td colspan="3">Nenhum ingrediente encontrado.</td>
+                        </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Modo de Preparo Tab -->
+                  <div
+                    class="tab-pane fade"
+                    id="preparation<%= comida.id %>"
+                    role="tabpanel"
+                    aria-labelledby="preparation-tab<%= comida.id %>"
+                  >
+                    <% if (comida.passos) { %>
+                    <ol>
+                      <% comida.passos.split('|').forEach((passo) => { %>
+                      <li><%= passo %></li>
+                      <% }); %>
+                    </ol>
+                    <% } else { %>
+                    <p>
+                      Não há passos de preparo cadastrados para esta receita.
+                    </p>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Fechar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <!-- Modal Login/Cadastro -->
+    <%- include('../modules/modalLoginCadastro') %>
+    <%- include('../modules/footer') %>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
+
+<style>
+    .imagemModal{
+      height: 300px !important;
+      align-items: center;
+    }
+  
+    .imagemCardPricipal{
+      height: 230px !important;
+    }
+  </style>
+  
